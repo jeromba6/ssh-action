@@ -1,21 +1,17 @@
 name: test
 on: push
 
-env:
-  FIRST_NAME: Mona
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: ls -a via OPEN SSH Private Key
+      - name: Pull git at webserver
         uses: fifsky/ssh-action@master
         with:
           command: |
-            cd /tmp
-            ls -a
-            echo "env_var:$FIRST_NAME"
-          host: ${{ secrets.HOST }}
-          user: root
-          key: ${{ secrets.PRIVATE_KEY}}
-#          pass: ${{ secrets.PASS }}
-          args: "-tt -vvv"
+            cd public_html/custom
+            git pull
+          host: ftp.anvt.nl
+          user: anvtnl
+          key: ${{ secrets.PRIVATE_KEY_ANVT_NL}}
+#         args: "-tt -vvv"
